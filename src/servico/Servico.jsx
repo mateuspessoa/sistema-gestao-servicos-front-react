@@ -26,6 +26,18 @@ function Servico() {
     setServico({ ...servico, [e.target.name]: e.target.value });
   }
 
+  function limpar() {
+    setServico({
+      nomeCliente: "",
+      dataInicio: "",
+      dataTermino: "",
+      descricaoServico: "",
+      valorServico: "",
+      valorPago: "",
+      dataPagamento: "",
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     if(servico.id === undefined){
@@ -39,7 +51,7 @@ function Servico() {
         setAtualizar(result);
       });
     }
-    
+    limpar();
   }
 
   return (
