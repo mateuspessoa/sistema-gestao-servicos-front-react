@@ -28,10 +28,18 @@ function Servico() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post("http://localhost:8080/api/servico/", servico).then((result) => {
-      //console.log(result);
-      setAtualizar(result);
-    });
+    if(servico.id === undefined){
+        axios.post("http://localhost:8080/api/servico/", servico).then((result) => {
+        //console.log(result);
+        setAtualizar(result);
+      });
+    }else{
+        axios.put("http://localhost:8080/api/servico/", servico).then((result) => {
+        //console.log(result);
+        setAtualizar(result);
+      });
+    }
+    
   }
 
   return (
@@ -54,7 +62,7 @@ function Servico() {
             <label className="form-label">Data de Início</label>
             <input
               onChange={handleChange}
-              value={servico.dataInicio}
+              value={servico.dataInicio || ''}
               name="dataInicio"
               type="date"
               className="form-control mb-4"
@@ -64,7 +72,7 @@ function Servico() {
             <label className="form-label">Data de Término</label>
             <input
               onChange={handleChange}
-              value={servico.dataTermino}
+              value={servico.dataTermino || ''}
               name="dataTermino"
               type="date"
               className="form-control mb-4"
@@ -84,7 +92,7 @@ function Servico() {
             <label className="form-label">Valor do Serviço</label>
             <input
               onChange={handleChange}
-              value={servico.valorServico}
+              value={servico.valorServico || ''}
               name="valorServico"
               type="number"
               className="form-control mb-4"
@@ -94,7 +102,7 @@ function Servico() {
             <label className="form-label">Valor Pago</label>
             <input
               onChange={handleChange}
-              value={servico.valorPago}
+              value={servico.valorPago || ''}
               name="valorPago"
               type="number"
               className="form-control mb-4"
@@ -104,7 +112,7 @@ function Servico() {
             <label className="form-label">Data do Pagamento</label>
             <input
               onChange={handleChange}
-              value={servico.dataPagamento}
+              value={servico.dataPagamento || ''}
               name="dataPagamento"
               type="date"
               className="form-control mb-4"
@@ -132,7 +140,15 @@ function Servico() {
               <td>{serv.descricaoServico}</td>
               <td>R$ {serv.valorServico}</td>
               <td>{serv.status}</td>
-              <td></td>
+              <td>
+                {serv.status !== 'cancelado' && 
+                  <>
+                    <button onClick={() => setServico(serv)} className="btn btn-primary">Editar</button>&nbsp;&nbsp;
+                    <button className="btn btn-warning">Cancelar</button>&nbsp;&nbsp;
+                  </>
+                }
+                <button className="btn btn-danger">Excluir</button>
+              </td>
             </tr>
           ))}
         </tbody>
