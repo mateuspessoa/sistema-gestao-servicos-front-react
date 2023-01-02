@@ -1,10 +1,9 @@
-import './App.css';
+import "./App.css";
+import Servico from "./servico/Servico";
 
 function App() {
   return (
-    <>
-      <h1>Cadastro de Serviços</h1>
-    </>
+    <Servico />
   );
 }
 
