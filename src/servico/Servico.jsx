@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import "./Servico.css";
 
@@ -14,7 +15,9 @@ function Servico() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(servico)
+        axios.post("http://localhost:8080/api/servico/", servico).then(result => {
+            console.log(result);
+        });
     }
 
 
