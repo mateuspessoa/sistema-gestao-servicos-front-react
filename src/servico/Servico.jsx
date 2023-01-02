@@ -17,13 +17,29 @@ function Servico() {
   const [atualizar, setAtualizar] = useState();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/servico/").then(result => {
-      setServicos(result.data);
-    });
+    buscarTodos();
   },[atualizar])
 
   function handleChange(e) {
     setServico({ ...servico, [e.target.name]: e.target.value });
+  }
+
+  function buscarTodos() {
+    axios.get("http://localhost:8080/api/servico/").then(result => {
+      setServicos(result.data);
+    });
+  }
+
+  function buscarPagamentoPendente(){
+    axios.get("http://localhost:8080/api/servico/pagamentoPendente").then(result => {
+      setServicos(result.data);
+    });
+  }
+
+  function buscarCancelados(){
+    axios.get("http://localhost:8080/api/servico/cancelados").then(result => {
+      setServicos(result.data);
+    });
   }
 
   function limpar() {
@@ -71,7 +87,7 @@ function Servico() {
       <h1>Cadastro de Serviços</h1>
 
       <form onSubmit={handleSubmit}>
-        <div className="col-6 mb-5">
+        <div className="col-6 mb-4">
           <div>
             <label className="form-label">Nome do cliente</label>
             <input
@@ -147,7 +163,11 @@ function Servico() {
         </div>
       </form>
 
-      <table className="table table-striped">
+      <button onClick={buscarTodos} type="button" className="btn btn-outline-primary mb-4">Todos os Serviços</button>&nbsp;&nbsp;
+      <button onClick={buscarPagamentoPendente} type="button" className="btn btn-outline-warning mb-4">Pagamentos Pendentes</button>&nbsp;&nbsp;
+      <button onClick={buscarCancelados} type="button" className="btn btn-outline-danger mb-4">Serviços Cancelados</button>
+
+      <table className="table table-striped mb-7">
         <thead>
           <tr>
             <th scope="col">Nome</th>
