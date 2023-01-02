@@ -54,6 +54,18 @@ function Servico() {
     limpar();
   }
 
+  function cancelar(id) {
+    axios.post("http://localhost:8080/api/servico/" + id).then(result => {
+      setAtualizar(result);
+    })
+  }
+
+  function excluir(id) {
+    axios.delete("http://localhost:8080/api/servico/" + id).then(result => {
+      setAtualizar(result);
+    })
+  }
+
   return (
     <div className="container mt-4">
       <h1>Cadastro de Serviços</h1>
@@ -156,10 +168,10 @@ function Servico() {
                 {serv.status !== 'cancelado' && 
                   <>
                     <button onClick={() => setServico(serv)} className="btn btn-primary">Editar</button>&nbsp;&nbsp;
-                    <button className="btn btn-warning">Cancelar</button>&nbsp;&nbsp;
+                    <button onClick={() => cancelar(serv.id)} className="btn btn-warning">Cancelar</button>&nbsp;&nbsp;
                   </>
                 }
-                <button className="btn btn-danger">Excluir</button>
+                <button onClick={() => excluir(serv.id)} className="btn btn-danger">Excluir</button>
               </td>
             </tr>
           ))}
